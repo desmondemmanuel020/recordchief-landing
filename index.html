@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Record Chief — Business Records for Nigerian Entrepreneurs</title>
+<meta name="description" content="Track your shop sales, farm expenses, debts and customer records. Free business app built for Nigerian entrepreneurs."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green: #00C48C;
+  --green-dark: #00A376;
+  --blue: #1E40AF;
+  --blue-mid: #2563EB;
+  --gold: #F59E0B;
+  --dark: #0A0F1E;
+  --dark2: #111827;
+  --surface: #161D31;
+  --white: #ffffff;
+  --border: rgba(255,255,255,0.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Sora', sans-serif; background: var(--dark); color: var(--white); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 5%;
+  background: rgba(10,15,30,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--white); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-cta { background: var(--green); color: var(--dark); padding: 10px 22px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+.nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 5% 80px; overflow: hidden;
+}
+.hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(37,99,235,0.25) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+.hero-glow2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(0,196,140,0.15) 0%, transparent 70%); top: 20%; right: 5%; pointer-events: none; }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,196,140,0.12); border: 1px solid rgba(0,196,140,0.3); border-radius: 50px; padding: 6px 16px; font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
+.hero h1 { font-size: clamp(36px, 7vw, 68px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 24px; animation: fadeUp 0.6s 0.1s ease both; }
+.hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--green), #00E5A6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: clamp(15px, 2.5vw, 18px); color: rgba(255,255,255,0.65); max-width: 540px; line-height: 1.8; margin: 0 auto 40px; animation: fadeUp 0.6s 0.2s ease both; }
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+.btn-primary { background: var(--green); color: var(--dark); padding: 15px 32px; border-radius: 50px; font-weight: 700; font-size: 16px; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 40px rgba(0,196,140,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,196,140,0.4); }
+.btn-secondary { background: rgba(255,255,255,0.08); color: var(--white); padding: 15px 32px; border-radius: 50px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s; }
+.btn-secondary:hover { background: rgba(255,255,255,0.14); }
+.hero-stats { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; margin-top: 64px; animation: fadeUp 0.6s 0.4s ease both; }
+.stat { text-align: center; }
+.stat-num { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; }
+.stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+/* PHONE MOCKUP */
+.phone-wrap { position: relative; z-index: 1; display: flex; justify-content: center; padding: 0 5% 80px; animation: fadeUp 0.8s 0.5s ease both; }
+.phone { width: 270px; background: var(--surface); border-radius: 40px; border: 2px solid rgba(255,255,255,0.1); padding: 14px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); position: relative; }
+.phone-screen { background: #0F1629; border-radius: 28px; overflow: hidden; }
+.phone-header { background: linear-gradient(135deg, #1E40AF, #2563EB); padding: 20px 16px 16px; }
+.phone-greeting { font-size: 11px; opacity: 0.7; margin-bottom: 2px; }
+.phone-name { font-size: 16px; font-weight: 700; }
+.phone-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.phone-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.06); }
+.phone-card-icon { font-size: 18px; margin-bottom: 4px; }
+.phone-card-label { font-size: 9px; color: rgba(255,255,255,0.4); }
+.phone-card-val { font-size: 13px; font-weight: 700; color: var(--green); }
+.phone-row { margin: 0 12px 8px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; }
+.phone-row-left { display: flex; align-items: center; gap: 8px; font-size: 10px; color: rgba(255,255,255,0.6); }
+.phone-row-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.phone-row-amt { font-size: 11px; font-weight: 700; color: var(--green); }
+
+/* SECTIONS */
+section { position: relative; z-index: 1; padding: 48px 5%; }
+.section-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--green); text-transform: uppercase; margin-bottom: 14px; }
+.section-title { font-size: clamp(26px, 4vw, 44px); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 14px; }
+.section-sub { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 520px; }
+
+/* FEATURES */
+.features-bg { background: var(--dark2); }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin-top: 48px; }
+.feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+.feature-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); opacity: 0; transition: opacity 0.3s; }
+.feature-card:hover { transform: translateY(-4px); border-color: rgba(0,196,140,0.25); }
+.feature-card:hover::after { opacity: 1; }
+.feature-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
+.feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.feature-card p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+/* HOW IT WORKS */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-top: 56px; }
+.step { text-align: center; padding: 0 16px; }
+.step-num { width: 60px; height: 60px; border-radius: 50%; background: rgba(0,196,140,0.1); border: 2px solid rgba(0,196,140,0.25); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--green); margin: 0 auto 20px; }
+.step h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; margin-top: 48px; max-width: 660px; margin-left: auto; margin-right: auto; }
+.pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 32px; }
+.pricing-card.featured { border-color: var(--green); background: linear-gradient(145deg, rgba(0,196,140,0.07), var(--surface)); position: relative; }
+.pricing-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--dark); padding: 4px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; letter-spacing: 1px; white-space: nowrap; }
+.price-tag { font-family: 'Space Mono', monospace; font-size: 36px; font-weight: 700; margin: 12px 0 4px; }
+.price-period { font-size: 13px; color: rgba(255,255,255,0.35); }
+.price-features { list-style: none; margin: 24px 0; display: flex; flex-direction: column; gap: 11px; }
+.price-features li { font-size: 14px; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 10px; }
+.price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.price-features li.no::before { content: '✕'; color: rgba(255,255,255,0.2); }
+.price-features li.no { color: rgba(255,255,255,0.25); }
+.price-btn { display: block; text-align: center; padding: 13px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.2s; }
+.price-btn-green { background: var(--green); color: var(--dark); }
+.price-btn-green:hover { background: var(--green-dark); }
+.price-btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
+.price-btn-outline:hover { background: rgba(255,255,255,0.07); }
+
+/* TESTIMONIALS */
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin-top: 48px; }
+.testimonial { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 26px; }
+.stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; }
+.testimonial-text { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.75); margin-bottom: 18px; font-style: italic; }
+.testimonial-text::before { content: '\201C'; font-size: 22px; color: var(--green); line-height: 0; vertical-align: -5px; margin-right: 3px; }
+.author { display: flex; align-items: center; gap: 11px; }
+.author-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.author-name { font-size: 13px; font-weight: 700; }
+.author-role { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+/* FAQ */
+.faq-list { max-width: 660px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-q { width: 100%; padding: 17px 20px; display: flex; align-items: center; justify-content: space-between; background: none; border: none; cursor: pointer; color: var(--white); font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; text-align: left; gap: 12px; }
+.faq-arrow { color: var(--green); font-size: 16px; flex-shrink: 0; transition: transform 0.25s; }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.8; padding: 0 20px; }
+.faq-item.open .faq-a { max-height: 200px; padding: 0 20px 16px; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+/* CTA */
+.cta-section { text-align: center; background: linear-gradient(135deg, #1E40AF, #1D4ED8 50%, #0F766E); position: relative; overflow: hidden; }
+.cta-section::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M20 20h20v20H20zM0 0h20v20H0z'/%3E%3C/g%3E%3C/svg%3E"); }
+.cta-section h2 { font-size: clamp(26px, 4vw, 46px); font-weight: 800; margin-bottom: 14px; position: relative; }
+.cta-section p { font-size: 16px; opacity: 0.8; margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.7; position: relative; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+.btn-white { background: var(--white); color: var(--blue); padding: 15px 32px; border-radius: 50px; font-weight: 800; font-size: 16px; text-decoration: none; transition: all 0.2s; }
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+.btn-wa { background: #25D366; color: var(--white); padding: 15px 32px; border-radius: 50px; font-weight: 700; font-size: 16px; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-wa:hover { transform: translateY(-2px); }
+
+/* FOOTER — fixed bottom nav bar matching the app */
+footer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #0D1120;
+  border-top: 1px solid rgba(255,255,255,0.09);
+  padding: 8px 0 max(10px, env(safe-area-inset-bottom));
+  display: flex; justify-content: space-around; align-items: flex-end;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.45);
+}
+.footer-tab {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  text-decoration: none; color: rgba(255,255,255,0.35);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.2px;
+  padding: 4px 10px;
+  transition: all 0.2s; flex: 1;
+  font-family: 'Sora', sans-serif;
+  background: none; border: none; cursor: pointer;
+}
+.footer-tab:hover { color: rgba(255,255,255,0.7); }
+.footer-tab.active { color: var(--green); }
+.footer-tab-icon { font-size: 22px; line-height: 1.1; transition: transform 0.2s; }
+.footer-tab.active .footer-tab-icon { transform: scale(1.12); filter: drop-shadow(0 0 5px rgba(0,196,140,0.5)); }
+/* elevated centre button */
+.footer-tab-main {
+  color: var(--green);
+}
+.footer-tab-main .footer-tab-icon {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-top: -18px;
+  box-shadow: 0 4px 18px rgba(0,196,140,0.45);
+}
+/* push page content above fixed footer */
+body { padding-bottom: 75px; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  nav { padding: 14px 4%; }
+  .hero { padding: 100px 4% 60px; }
+  .hero-stats { gap: 28px; }
+  /* footer stays as row on mobile */
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">📒 Record Chief</a>
+  <a href="https://record-chief.vercel.app" class="nav-cta" target="_blank">Start Free →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="badge">🇳🇬 Built for Nigerian Business Owners</div>
+  <h1>Run Your Business.<br/><em>Know Your Numbers.</em></h1>
+  <p>Track shop sales, farm expenses, customer debts and inventory — all in one free app. No accountant needed. Works without internet.</p>
+  <div class="hero-btns">
+    <a href="https://record-chief.vercel.app" class="btn-primary" target="_blank">🚀 Get Started Free</a>
+    <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free to Use</div></div>
+    <div class="stat"><div class="stat-num">4-in-1</div><div class="stat-label">Business Tools</div></div>
+    <div class="stat"><div class="stat-num">Offline</div><div class="stat-label">No Internet Needed</div></div>
+  </div>
+</section>
+
+<!-- PHONE MOCKUP -->
+<div class="phone-wrap" style="position:relative;z-index:1">
+  <div class="phone">
+    <div class="phone-screen">
+      <div class="phone-header">
+        <div class="phone-greeting">Good morning 👋</div>
+        <div class="phone-name">Chidi's Business</div>
+      </div>
+      <div class="phone-cards">
+        <div class="phone-card">
+          <div class="phone-card-icon">🏪</div>
+          <div class="phone-card-label">Today's Sales</div>
+          <div class="phone-card-val">₦42,500</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-icon">🤝</div>
+          <div class="phone-card-label">Money Owed</div>
+          <div class="phone-card-val">₦18,000</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-icon">🌾</div>
+          <div class="phone-card-label">Farm Spend</div>
+          <div class="phone-card-val">₦9,200</div>
+        </div>
+        <div class="phone-card">
+          <div class="phone-card-icon">📦</div>
+          <div class="phone-card-label">In Stock</div>
+          <div class="phone-card-val">24 Items</div>
+        </div>
+      </div>
+      <div class="phone-row">
+        <div class="phone-row-left"><div class="phone-row-dot"></div>Indomie — 24 cartons</div>
+        <div class="phone-row-amt">+₦12,000</div>
+      </div>
+      <div class="phone-row">
+        <div class="phone-row-left"><div class="phone-row-dot" style="background:#F59E0B"></div>Fertilizer — Farm</div>
+        <div class="phone-row-amt" style="color:#F59E0B">-₦4,500</div>
+      </div>
+      <div class="phone-row" style="margin-bottom:14px">
+        <div class="phone-row-left"><div class="phone-row-dot" style="background:#EF4444"></div>Emeka owes you</div>
+        <div class="phone-row-amt" style="color:#EF4444">₦8,000</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-bg" id="features">
+  <div class="section-tag">Features</div>
+  <div class="section-title">Everything your business needs</div>
+  <div class="section-sub">Four powerful tools in one app — all free, all offline-ready.</div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(37,99,235,0.15)">🏪</div>
+      <h3>Shop Sales Record</h3>
+      <p>Record every sale, manage inventory, track best-selling items and see daily, weekly and monthly totals at a glance.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(5,150,105,0.15)">🌾</div>
+      <h3>Farm Expense Tracker</h3>
+      <p>Log seeds, fertilizer, labor, transport and equipment costs by category. See exactly where your farm money is going.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(220,38,38,0.15)">🤝</div>
+      <h3>Debt & Credit Manager</h3>
+      <p>Track who owes you and who you owe. Set due dates, get reminders, record part-payments and never forget a debt again.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(124,58,237,0.15)">👥</div>
+      <h3>Customer Records</h3>
+      <p>Build your own custom tracking sheet for clients, deals or any data your business needs. Fully flexible columns.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(245,158,11,0.15)">📊</div>
+      <h3>Business Overview</h3>
+      <p>Monthly charts, profit and loss breakdown, health score and month-on-month comparison — all in one dashboard.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(0,196,140,0.15)">📲</div>
+      <h3>Works Offline</h3>
+      <p>Install on your phone like a native app. Works without internet — your data is always there even without data or WiFi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div style="text-align:center">
+    <div class="section-tag">How It Works</div>
+    <div class="section-title">Up and running in 2 minutes</div>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Create Free Account</h3>
+      <p>Sign up with your email. No credit card, no hidden fees. Takes 60 seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Pick Your Sectors</h3>
+      <p>Choose the business types that apply — Shop, Farm, Customer Records, or all three.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Start Recording</h3>
+      <p>Add sales, expenses, debts and inventory. The app organises everything automatically.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Know Your Numbers</h3>
+      <p>Check your overview anytime — daily totals, monthly trends and your business health score.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="features-bg" id="pricing">
+  <div style="text-align:center">
+    <div class="section-tag">Pricing</div>
+    <div class="section-title">Simple, honest pricing</div>
+    <div class="section-sub" style="margin:0 auto">Start free. Stay free. Upgrade when your business grows.</div>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="section-tag" style="margin:0 0 8px">Free Forever</div>
+      <div class="price-tag">₦0</div>
+      <div class="price-period">forever · no card needed</div>
+      <ul class="price-features">
+        <li>Shop Sales Tracking</li>
+        <li>Farm Expense Log</li>
+        <li>Debt &amp; Credit Manager</li>
+        <li>Customer Records</li>
+        <li>Business Overview</li>
+        <li>Works Offline</li>
+      </ul>
+      <a href="https://record-chief.vercel.app" class="price-btn price-btn-green" target="_blank">Get Started Free</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-badge">COMING SOON</div>
+      <div class="section-tag" style="margin:0 0 8px">Pro Plan</div>
+      <div class="price-tag">₦1,500</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li>Everything in Free</li>
+        <li>Sync across devices</li>
+        <li>Export to Excel &amp; PDF</li>
+        <li>Push notifications</li>
+        <li>Cloud backup</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="https://wa.me/2348119528922" class="price-btn price-btn-outline" target="_blank">Join Waitlist</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag">Testimonials</div>
+  <div class="section-title">What business owners say</div>
+  <div class="testimonials-grid reveal">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">I used to write everything in a notebook and always lost track of who owes me. Record Chief changed everything — I can see all my debts in one place.</p>
+      <div class="author">
+        <div class="author-av" style="background:rgba(37,99,235,0.15)">👩</div>
+        <div><div class="author-name">Ngozi A.</div><div class="author-role">Shop owner, Lagos</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">As a farmer I never knew where my money was going. Now I can track every expense and see my profit at the end of the season. Very useful app.</p>
+      <div class="author">
+        <div class="author-av" style="background:rgba(5,150,105,0.15)">👨‍🌾</div>
+        <div><div class="author-name">Emeka O.</div><div class="author-role">Poultry farmer, Enugu</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The app works even without internet. That is the best part for me because network is not always stable in my area. I recommend to every trader.</p>
+      <div class="author">
+        <div class="author-av" style="background:rgba(245,158,11,0.15)">👩‍💼</div>
+        <div><div class="author-name">Fatima M.</div><div class="author-role">Market trader, Kano</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="features-bg" id="faq">
+  <div style="text-align:center">
+    <div class="section-tag">FAQ</div>
+    <div class="section-title">Common questions</div>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is Record Chief really free? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes — completely free. Create an account and use all features with no credit card required. A Pro plan is coming soon for advanced features but the core app will always be free.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Does it work without internet? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes. Once you install the app on your phone it works fully offline. Your records are saved on your device and sync to the cloud automatically when you are back online.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I install it on my phone? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Open the app in your phone browser, tap the Share button on iPhone or the menu button on Android, then choose "Add to Home Screen". It installs like a normal app — no App Store needed.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I use it for multiple businesses? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes. You can activate multiple sectors — Shop, Farm and Customer Records — all under one account. Each sector keeps its own records separately.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is my data safe? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Your data is saved on your device and backed up securely to our servers. We use encrypted connections and never share your business data with anyone.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I export my records? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes — export all your records to Excel or PDF from the Overview screen. Great for sharing with your accountant or keeping personal backups.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Start tracking your<br/>business today</h2>
+  <p>Free forever. No credit card. Works on any phone. Built for Nigeria.</p>
+  <div class="cta-btns">
+    <a href="https://record-chief.vercel.app" class="btn-white" target="_blank">🚀 Create Free Account</a>
+    <a href="https://wa.me/2348119528922" class="btn-wa" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat on WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER — bottom nav bar -->
+<footer>
+  <button class="footer-tab active" onclick="goTo(null, this)">
+    <span class="footer-tab-icon">🏠</span>
+    <span>Home</span>
+  </button>
+  <button class="footer-tab" onclick="goTo('features', this)">
+    <span class="footer-tab-icon">⭐</span>
+    <span>Features</span>
+  </button>
+  <a href="https://record-chief.vercel.app" class="footer-tab footer-tab-main" target="_blank">
+    <span class="footer-tab-icon">📒</span>
+    <span>Open App</span>
+  </a>
+  <button class="footer-tab" onclick="goTo('testimonials', this)">
+    <span class="footer-tab-icon">💬</span>
+    <span>Reviews</span>
+  </button>
+  <button class="footer-tab" onclick="goTo('faq', this)">
+    <span class="footer-tab-icon">❓</span>
+    <span>FAQ</span>
+  </button>
+</footer>
+
+<script>
+// Navigate to section
+function goTo(id, btn) {
+  // update active tab
+  document.querySelectorAll('.footer-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  // scroll
+  if (!id) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = el.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }
+}
+
+// FAQ toggle
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Scroll reveal
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Active footer tab on scroll
+const footerTabs = document.querySelectorAll('.footer-tab');
+function setActive(idx) {
+  footerTabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+}
+window.addEventListener('scroll', () => {
+  const pos = window.scrollY + window.innerHeight / 2;
+  let active = 0;
+  document.querySelectorAll('section[id]').forEach(sec => {
+    if (sec.offsetTop <= pos) {
+      if (sec.id === 'features' || sec.id === 'how-it-works') active = 1;
+      else if (sec.id === 'testimonials' || sec.id === 'faq' || sec.id === 'pricing') active = 3;
+    }
+  });
+  setActive(active);
+});
+</script>
+</body>
+</html>
